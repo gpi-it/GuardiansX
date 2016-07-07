@@ -60,7 +60,7 @@
         });
 
         var map = L.map('mapid', {zoomControl: false}).setView([0, 0], 3);
-        var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
         var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
         var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
         osm.addTo(map);
@@ -80,7 +80,7 @@
             var acquired_gte = now.toISOString();
 
             var initiallayerurl = 
-            "http://tile-{s}.urthecast.com/v1/" + renderer + "/{z}/{x}/{y}?" +
+            "https://tile-{s}.urthecast.com/v1/" + renderer + "/{z}/{x}/{y}?" +
                 "api_key=" + api_key +
                 "&api_secret=" + api_secret +
                 "&platform=" + platform +
