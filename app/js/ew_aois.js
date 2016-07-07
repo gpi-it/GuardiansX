@@ -2,9 +2,11 @@ function zoomToBookmark(){
     var s=document.getElementById('selectBookmark');
     var aoi= _aois.payload[s.selectedIndex-1];
     var geom = aoi.geometry;
-    var polygon = L.geoJson(geom);
+    var firstHexagon = getRandomHexagon(geom, 4);
+    var polygon = L.geoJson(geom, {fill: false});
     map.fitBounds(polygon.getBounds());
     polygon.addTo(map);
+    drawHexagon(map, firstHexagon);
 }
 
 function getAois(callback){
