@@ -4,6 +4,7 @@ function zoomToBookmark(){
     var geom = aoi.geometry;
     var polygon = L.geoJson(geom);
     map.fitBounds(polygon.getBounds());
+    polygon.addTo(map);
 }
 
 function getAois(callback){
@@ -31,4 +32,8 @@ getAois(function (aois){
         option.text=aois.payload[i].name;
         s.add(option);                    
     }
+
+    // now select the first option, map zooms in to this project
+    s.selectedIndex=1;
+    zoomToBookmark();
 })
