@@ -1,27 +1,16 @@
-# Exploration of UrtheCast Api
-
-Javascript viewer for recent images (last month) from UrtheCast (https://www.urthecast.com/)
-
-# Techniques used
-
-Leaflet 0.7.7
-
-Contains sample code for:
-
-- Query UrtheCast API 
-
-- UrtheCast API Authentication
-
-- Add Leaflet tilelayers for a UrtheCast maps 
+# GuardiansX
 
 # Installation
 
-git clone https://github.com/bertt/Urthecast.Api.git
+git clone https://github.com/gpi-it/GuardiansX.git
 
-cd Urthecast.Api 
+cd GuardiansX
 
-copy config-sample.js config.js
+copy app/js/config-sample.js app/js/config.js
+// and insert your UrtheCast api keys in config.js
 
-// and insert your UrtheCast api key in config.js
+npm install
 
-// and run on your favorite webserver
+node server.js
+
+browser: open http://localhost:3000
