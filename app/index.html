@@ -1,5 +1,4 @@
 <html>
-<!-- -->
 <head>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
@@ -39,11 +38,6 @@
 
     <div id="topbar">
         <img id="gg" src="images/gg.png"></img>
-        <i id="managedate" class="fa fa-calendar" aria-hidden="true"></i>
-        <i id="clearmap" class="fa fa-eraser" aria-hidden="true"></i>
-        <select id="layerDropdown">
-            <option disabled>Select Calendar button to the left to add layer</option>
-        </select>
         <select id="selectBookmark" onchange="zoomToBookmark()">
             <option disabled selected value> -- select an area of interest -- </option>            
         </select>
@@ -53,12 +47,6 @@
     <div id="topdivider"></div>
     <div id="mapid"></div>
 
-    <div id="managetimes">
-        <div id="closemanagetimes"><i class="fa fa-times fa-2x" aria-hidden="true"></i></div>
-        Add Month
-        <input id="date">
-        <div id="addedmonths"></div>
-    </div>
     <script>
         var layers = {};
         var layernames = Array();
@@ -66,17 +54,6 @@
 
         $(document).ready(function() {
             initialMap();
-            $(window).keypress(function(e) {
-                var key = e.which;
-                console.log(key);
-                if (key == 97) {
-                    lastLayer();
-                }
-                else if (key == 100) {
-                    nextLayer();
-                }
-                //do stuff with "key" here...
-            });
             setTimeout(function() {
                 $("#welcome").fadeIn(3000, function() {
                     $("#welcome").fadeOut(1000, function() {
@@ -84,178 +61,42 @@
                     });
                 })
             }, 2);
-            $("#renderbutton").click(function() {
-                if ($("#renderbutton").hasClass("fa-toggle-on")) {
-                    addUrthecastImages();
-                    $("#renderbutton").removeClass("fa-toggle-on");
-                    $("#renderbutton").addClass("fa-toggle-off");
-                }
-                else {
-                    removeUrthecastImages();
-                    $("#renderbutton").removeClass("fa-toggle-off");
-                    $("#renderbutton").addClass("fa-toggle-on");
-                }
-            });
-            $("#managedate").click(function() {
-                $("#managetimes").show();
-            });
-            $("#closemanagetimes").click(function() {
-                $("#managetimes").hide();
-            });
-            $('#date').monthpicker();
-            $('#date').change(function(){
-                console.log($(this).val());
-                var date = $("#date").val().split("/");
-                var curdate = new Date();
-                if (date[1] == curdate.getYear() && [0] > curdate.getMonth() + 1) {
-                    alert("Date is in the future. Please adjust your selection accordingly.");
-                }
-                else {
-                    if (parseInt(date[0])) {
-                        //console.log(date);
-                        if (layernames.indexOf(date[0] + "-" + date[1]) > -1) {
-                            alert("Date is already in list. Please select another.")
-                        }
-                        else {
-                            addLayer(date[0], date[1]);
-                        }
-                    }
-                }
-            })
         });
 
-        var map = L.map('mapid', {
-            zoomControl: false
-        }).setView([0, 0], 3);
+        var map = L.map('mapid', {zoomControl: false}).setView([0, 0], 3);
         var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
         var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
-        var osm = new L.TileLayer(osmUrl, {
-            attribution: osmAttrib
-        });
+        var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
         osm.addTo(map);
         new L.Control.Zoom({ position: 'topright' }).addTo(map);
 
-        // possible renderers: ndvi, rgb, ndwi, evi, false-color-nir
-        var renderer = "rgb";
-
-        // 	Average percentage of cloud coverage throughout the entire scene; calculated from its cloud mask
-        var cloud_coverage = 20;
-
-        // platforms: iss, landsat-8, deimos-1
-        var platform = "landsat-8";
-
-        var acquired_gte = "2012-01-06T12:00:00.000Z";
-        var acquired_lte = "2014-04-06T12:00:00.000Z";
-        var initiallayer;
-
-        var urthecasturl = "http://tile-{s}.urthecast.com/v1/" + renderer + "/{z}/{x}/{y}?" +
-            "api_key=" + api_key +
-            "&api_secret=" + api_secret +
-            "&platform=" + platform +
-            "&cloud_coverage_lte=" + cloud_coverage +
-            "&acquired_gte=" + acquired_gte +
-            "&acquired_lte=" + acquired_lte;
-        var urthecastlayer = new L.TileLayer(urthecasturl);
-
-        function addUrthecastImages() {
-            map.addLayer(urthecastlayer);
-        }
-
-        function removeUrthecastImages() {
-            map.removeLayer(urthecastlayer);
-        }
         function initialMap(){
             var renderer = "rgb";
             var cloud_coverage = 20;
             var platform = "landsat-8";
+            var minZoom = 7;
+            var months = 2;
+
+            var now = new Date();
+
+            var acquired_lte = now.toISOString();
+            now.setMonth(now.getMonth() - months);
+            var acquired_gte = now.toISOString();
 
             var initiallayerurl = 
             "http://tile-{s}.urthecast.com/v1/" + renderer + "/{z}/{x}/{y}?" +
                 "api_key=" + api_key +
                 "&api_secret=" + api_secret +
                 "&platform=" + platform +
-                "&cloud_coverage_lte=" + cloud_coverage;
-            initiallayer = new L.TileLayer(initiallayerurl, {minZoom: 5});
+                "&cloud_coverage_lte=" + cloud_coverage +
+                "&acquired_gte=" + acquired_gte +
+                "&acquired_lte=" + acquired_lte;
+                
+            initiallayer = new L.TileLayer(initiallayerurl, {minZoom: minZoom});
             
             map.addLayer(initiallayer);
         }
-        function addLayer(mm, yy) {
-            var layername = mm + "-" + yy;
-            console.log(layername);
 
-            var renderer = "rgb";
-            var cloud_coverage = 20;
-            var platform = "landsat-8";
-
-            var acquired_gte = yy + "-" + mm + "-01T12:00:00.000Z";
-            var acquired_lte = yy + "-" + mm + "-28T12:00:00.000Z";
-
-            var urthecasturl = "http://tile-{s}.urthecast.com/v1/" + renderer + "/{z}/{x}/{y}?" +
-                "api_key=" + api_key +
-                "&api_secret=" + api_secret +
-                "&platform=" + platform +
-                "&cloud_coverage_lte=" + cloud_coverage +
-                "&acquired_gte=" + acquired_gte +
-                "&acquired_lte=" + acquired_lte
-            layers[layername] = new L.TileLayer(urthecasturl);
-            $("#addedmonths").append('<div><i class="fa fa-times removedatebutton" aria-hidden="true"> </i><span class="layername">' + layername + '</span></div');
-            layernames.push(layername);
-            applyRemoveButtonClick();
-            updateLayerList();
-        }
-
-        function applyRemoveButtonClick() {
-            $(".removedatebutton").click(function() {
-                var todel = $(this).parent().children(".layername").text();
-                console.log(todel);
-                $(this).parent().remove();
-                map.removeLayer(todel);
-                removeAllLayers();
-                for (var i = layernames.length - 1; i >= 0; i--) {
-                    if (layernames[i] === todel) {
-                        layernames.splice(i, 1);
-                    }
-                }
-                
-                $("#date").val($("#date option:first").val());
-                updateLayerList();
-            });
-        }
-
-        function updateLayerList() {
-            map.removeLayer(initiallayer);
-            $("#layerDropdown").empty();
-            var select = document.getElementById("layerDropdown");
-            for (var i = 0; i < layernames.length; i++) {
-                var opt = layernames[i];
-                var el = document.createElement("option");
-                el.textContent = opt;
-                el.value = opt;
-                select.appendChild(el);
-            }
-            $("#layerDropdown").change(function() {
-                //console.log($(this).val());
-                removeAllLayers();
-                map.addLayer(layers[$(this).val()]);
-            })
-            console.log($("#layerDropdown").val());
-            if($("#layerDropdown").val() != null){
-                map.addLayer(layers[$("#layerDropdown").val()]);
-            }
-            else{
-                removeAllLayers();
-                console.log("NO ELES");
-                $("#layerDropdown").append('<option disabled>Select Calendar button to the left to add layer</option>');
-            }
-        }
-
-        function removeAllLayers() {
-            for (var i = 0; i < layernames.length; i++) {
-                //console.log(layernames[i]);
-                map.removeLayer(layers[layernames[i]]);
-            }
-        }
-            
     </script>
 </body>
 
