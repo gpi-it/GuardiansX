@@ -13,6 +13,7 @@
     <script src="js/hex_v3.2_core.js"></script>
     <script src="js/ew_aois.js"></script>
     <script src="js/ew_geohex.js"></script>
+    <script src="js/ew_urthecast.js"></script>
     <script src="https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js"></script>
     <link rel="stylesheet" type="text/css" href="styles/main.css">
 </head>
@@ -37,18 +38,42 @@
     </div>
 
     <div id="topbar">
-        <img id="gg" src="images/gg.png"></img>
-        <select id="selectBookmark" onchange="zoomToBookmark()">
-            <option disabled selected value> -- select an area of interest -- </option>            
-        </select>
         <div id="topbarcontent">
+            <img id="gg" src="images/gg.png"></img>
+            
+            Project: <select id="selectBookmark" onchange="zoomToBookmark()">
+            </select>
+
+            Period: <select id="selectPeriodImages" onchange="selectPeriodImages()">
+                <option value="1">Day</option>
+                <option value="7">Week</option>
+                <option value="30">Month</option>
+                <option value= "90" selected>Quarter</option>
+            </select>
+
+            Max Clouds: <select id="selectClouds" onchange="selectClouds()" disabled>
+                <option value>0%</option>
+                <option value selected>20%</option>
+                <option value>40%</option>
+                <option value>60%</option>
+                <option value>80%</option>
+            </select>
+
         </div>
     </div>
     <div id="topdivider"></div>
     <div id="mapid"></div>
 
     <script>
+        // global vars
         var _aois;
+        var days = 90;
+        var renderer = "rgb";
+        var cloud_coverage = 20;
+        var platform = "landsat-8";
+        var minZoom = 7;
+        var acquired_gte;
+        var acquired_lte;
 
         $(document).ready(function() {
             initialMap();
@@ -69,30 +94,7 @@
         new L.Control.Zoom({ position: 'topright' }).addTo(map);
 
         function initialMap(){
-            var renderer = "rgb";
-            var cloud_coverage = 20;
-            var platform = "landsat-8";
-            var minZoom = 7;
-            var months = 2;
-
-            var now = new Date();
-
-            var acquired_lte = now.toISOString();
-            now.setMonth(now.getMonth() - months);
-            var acquired_gte = now.toISOString();
-
-            var initiallayerurl = 
-            "https://tile-{s}.urthecast.com/v1/" + renderer + "/{z}/{x}/{y}?" +
-                "api_key=" + api_key +
-                "&api_secret=" + api_secret +
-                "&platform=" + platform +
-                "&cloud_coverage_lte=" + cloud_coverage +
-                "&acquired_gte=" + acquired_gte +
-                "&acquired_lte=" + acquired_lte;
-                
-            initiallayer = new L.TileLayer(initiallayerurl, {minZoom: minZoom});
-            
-            map.addLayer(initiallayer);
+            addUrthecastLayer(days);
         }
 
     </script>

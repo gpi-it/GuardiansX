@@ -1,12 +1,24 @@
 function zoomToBookmark(){
     var s=document.getElementById('selectBookmark');
-    var aoi= _aois.payload[s.selectedIndex-1];
+    var aoi= _aois.payload[s.selectedIndex];
     var geom = aoi.geometry;
     var firstHexagon = getRandomHexagon(geom, 4);
     var polygon = L.geoJson(geom, {fill: false});
     map.fitBounds(polygon.getBounds());
     polygon.addTo(map);
     drawHexagon(map, firstHexagon);
+}
+
+function selectPeriodImages(){
+    var periodSelect=document.getElementById('selectPeriodImages');
+    days = periodSelect.options[periodSelect.selectedIndex].value;
+
+    map.eachLayer(function (layer) {
+        if(layer.id=="urthecast"){
+            map.removeLayer(layer);
+            addUrthecastLayer(days);
+        }
+    });
 }
 
 function getAois(callback){
@@ -36,6 +48,6 @@ getAois(function (aois){
     }
 
     // now select the first option, map zooms in to this project
-    s.selectedIndex=1;
+    s.selectedIndex=0;
     zoomToBookmark();
 })
