@@ -1,12 +1,20 @@
+function refreshScenes(){
+    var aoid = _aoi.id;
+    getScenes(aoid,function(scenes){
+        document.getElementById('numberOfScenes').innerHTML = scenes.payload.length;
+    });
+}
+
 function zoomToBookmark(){
     var s=document.getElementById('selectBookmark');
-    var aoi= _aois.payload[s.selectedIndex];
-    var geom = aoi.geometry;
+    _aoi = _aois.payload[s.selectedIndex];
+    var geom = _aoi.geometry;
     var firstHexagon = getRandomHexagon(geom, 4);
     var polygon = L.geoJson(geom, {fill: false});
     map.fitBounds(polygon.getBounds());
     polygon.addTo(map);
     drawHexagon(map, firstHexagon);
+    refreshScenes();
 }
 
 function selectPeriodImages(){
@@ -17,6 +25,7 @@ function selectPeriodImages(){
         if(layer.id=="urthecast"){
             map.removeLayer(layer);
             addUrthecastLayer(days);
+            refreshScenes();
         }
     });
 }

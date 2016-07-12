@@ -11,6 +11,7 @@
     <script src="js/monthpicker.js"></script>
     <script src="js/config.js"></script>
     <script src="js/hex_v3.2_core.js"></script>
+    <script src="js/ew_scenes.js"></script>
     <script src="js/ew_aois.js"></script>
     <script src="js/ew_geohex.js"></script>
     <script src="js/ew_urthecast.js"></script>
@@ -59,6 +60,17 @@
                 <option value>80%</option>
             </select>
 
+            Scenes: <span id="numberOfScenes"></span>
+            &nbsp;&nbsp;&nbsp;
+            Score: <span id="score">3</span>
+            &nbsp;&nbsp;&nbsp;
+            <select id="login" onchange="">
+                <option value selected>-- login -- </option>
+                <option value>Twitter</option>
+                <option value>Facebook</option>
+                <option value>Google</option>
+            </select>            
+
         </div>
     </div>
     <div id="topdivider"></div>
@@ -67,6 +79,7 @@
     <script>
         // global vars
         var _aois;
+        var _aoi;
         var days = 90;
         var renderer = "rgb";
         var cloud_coverage = 20;
@@ -76,7 +89,6 @@
         var acquired_lte;
 
         $(document).ready(function() {
-            initialMap();
             setTimeout(function() {
                 $("#welcome").fadeIn(3000, function() {
                     $("#welcome").fadeOut(1000, function() {
@@ -92,11 +104,7 @@
         var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
         osm.addTo(map);
         new L.Control.Zoom({ position: 'topright' }).addTo(map);
-
-        function initialMap(){
-            addUrthecastLayer(days);
-        }
-
+        addUrthecastLayer(days);
     </script>
 </body>
 

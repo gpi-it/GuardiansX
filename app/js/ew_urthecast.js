@@ -5,7 +5,6 @@ function setPeriod(days){
     acquired_gte = now.toISOString();
 }
 
-
 function getLayerUrl(){
     var layerurl = 
     "https://tile-{s}.urthecast.com/v1/" + renderer + "/{z}/{x}/{y}?" +
