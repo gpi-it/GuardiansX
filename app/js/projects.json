@@ -1,0 +1,8 @@
+{
+    "projects": 
+    [
+      {"name": "Chaco", "hexlevel":4},
+      {"name": "Veladero", "hexlevel":6},
+      {"name": "ITCI", "hexlevel":4}
+    ]
+}

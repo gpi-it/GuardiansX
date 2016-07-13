@@ -12,6 +12,7 @@
     <script src="js/config.js"></script>
     <script src="js/hex_v3.2_core.js"></script>
     <script src="js/ew_scenes.js"></script>
+    <script src="js/ew_projects.js"></script>
     <script src="js/ew_aois.js"></script>
     <script src="js/ew_geohex.js"></script>
     <script src="js/ew_urthecast.js"></script>
@@ -79,6 +80,7 @@
 
     <script>
         // global vars
+        var _projects;
         var _aois;
         var _aoi;
         var days = 90;
@@ -86,6 +88,7 @@
         var cloud_coverage = 20;
         var platform = "landsat-8";
         var minZoom = 7;
+        var hexlevel=4;
         var acquired_gte;
         var acquired_lte;
 
@@ -106,6 +109,16 @@
         osm.addTo(map);
         new L.Control.Zoom({ position: 'topright' }).addTo(map);
         addUrthecastLayer(days);
+
+        getAois(function (aois) {
+            _aois=aois;
+            getProjects(function (projects) {
+                _projects=projects.projects;
+                fillAois(aois);
+                zoomToBookmark();
+            });
+        });
+        
     </script>
 </body>
 

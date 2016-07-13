@@ -9,7 +9,9 @@ function zoomToBookmark(){
     var s=document.getElementById('selectBookmark');
     _aoi = _aois.payload[s.selectedIndex];
     var geom = _aoi.geometry;
-    var firstHexagon = getRandomHexagon(geom, 4);
+    var project = getProjectByName(_projects,_aoi.name);
+    hexlevel = project.hexlevel;
+    var firstHexagon = getRandomHexagon(geom, hexlevel);
     var polygon = L.geoJson(geom, {fill: false});
     map.fitBounds(polygon.getBounds());
     polygon.addTo(map);
@@ -58,8 +60,7 @@ function getAois(callback){
     request.send();
 }
 
-getAois(function (aois){
-    _aois=aois;
+function fillAois(aois){
     var s=document.getElementById('selectBookmark');
     
     var amount = aois.payload.length;
@@ -71,5 +72,4 @@ getAois(function (aois){
 
     // now select the first option, map zooms in to this project
     s.selectedIndex=0;
-    zoomToBookmark();
-})
+}
