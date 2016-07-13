@@ -31,6 +31,7 @@ function drawHexagon(map, geohex) {
 
     var polygon = getGeohexPolygon(geohex, style);
     polygon.name = polygonName;
+    polygon.id= "hexagon";
     map.addLayer(polygon);
     return polygon;
 }

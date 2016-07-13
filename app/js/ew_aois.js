@@ -6,6 +6,12 @@ function refreshScenes(){
 }
 
 function zoomToBookmark(){
+    map.eachLayer(function (layer) {
+        if(layer.id=="hexagon"){
+            map.removeLayer(layer);
+        }
+    });  
+
     var s=document.getElementById('selectBookmark');
     _aoi = _aois.payload[s.selectedIndex];
     var geom = _aoi.geometry;
