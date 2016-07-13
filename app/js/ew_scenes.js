@@ -5,7 +5,8 @@ function getScenes(aoi_id, callback){
     "&limit=100" + 
     "&geometry_intersects=" + aoi_id + 
     "&acquired_gte=" + acquired_gte +
-    "&acquired_lte=" + acquired_lte;
+    "&acquired_lte=" + acquired_lte + 
+    "&cloud_coverage_lte=" +cloud_coverage
         
     var request = new XMLHttpRequest();
     request.open('GET', aoiUrl, true);

@@ -30,6 +30,19 @@ function selectPeriodImages(){
     });
 }
 
+function selectClouds(){
+    var cloudSelect=document.getElementById('selectClouds');
+    cloud_coverage = cloudSelect.options[cloudSelect.selectedIndex].value;
+
+    map.eachLayer(function (layer) {
+        if(layer.id=="urthecast"){
+            map.removeLayer(layer);
+            addUrthecastLayer(days);
+            refreshScenes();
+        }
+    });
+}
+
 function getAois(callback){
     var aoiUrl='https://api.urthecast.com/v1/consumers/apps/me/aois?'+
     "api_key=" + api_key + 
