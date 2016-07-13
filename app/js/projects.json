@@ -1,8 +1,8 @@
 {
     "projects": 
     [
-      {"name": "Chaco", "hexlevel":4},
-      {"name": "Veladero", "hexlevel":6},
-      {"name": "ITCI", "hexlevel":4}
+      {"name": "Chaco", "hexlevel":4, "question":"Is there deforestation?", "options":["Yes", "No", "Maybe", "Don't know"]},
+      {"name": "Veladero", "hexlevel":6,"question": "Do you observe mining activities?", "options":["Yes", "No", "Maybe", "Don't know"]},
+      {"name": "ITCI", "hexlevel":4, "question":"Is there deforestation?", "options":["Yes", "No", "Maybe", "Don't know"]}
     ]
 }

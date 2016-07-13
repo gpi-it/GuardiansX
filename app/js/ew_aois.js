@@ -16,6 +16,7 @@ function zoomToBookmark(){
     _aoi = _aois.payload[s.selectedIndex];
     var geom = _aoi.geometry;
     var project = getProjectByName(_projects,_aoi.name);
+    document.getElementById('divQuestion').innerHTML = project.question;
     hexlevel = project.hexlevel;
     var firstHexagon = getRandomHexagon(geom, hexlevel);
     var polygon = L.geoJson(geom, {fill: false});
