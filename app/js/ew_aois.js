@@ -5,18 +5,33 @@ function refreshScenes(){
     });
 }
 
-function zoomToBookmark(){
+function removeHexagons(){
     map.eachLayer(function (layer) {
         if(layer.id=="hexagon"){
             map.removeLayer(layer);
         }
     });  
+}
 
+function printQuestion(question, options){
+    document.getElementById('divQuestion').innerHTML = question;
+    var divOptions = document.getElementById('divOptions');
+    for(i=0;i<options.length;i++){
+        var option=options[i];
+        var div = document.createElement('span');
+        div.innerHTML=option;
+        div.setAttribute('id', 'spanOption');
+        divOptions.appendChild(div);
+    }
+}
+
+function zoomToBookmark(){
+    removeHexagons();
     var s=document.getElementById('selectBookmark');
     _aoi = _aois.payload[s.selectedIndex];
     var geom = _aoi.geometry;
     var project = getProjectByName(_projects,_aoi.name);
-    document.getElementById('divQuestion').innerHTML = project.question;
+    printQuestion(project.question, project.options)
     hexlevel = project.hexlevel;
     var firstHexagon = getRandomHexagon(geom, hexlevel);
     var polygon = L.geoJson(geom, {fill: false});
