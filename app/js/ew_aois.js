@@ -25,7 +25,7 @@ function printQuestion(question, options){
     }
 }
 
-function zoomToBookmark(){
+function startProject(){
     removeHexagons();
     var s=document.getElementById('selectBookmark');
     _aoi = _aois.payload[s.selectedIndex];
@@ -33,11 +33,12 @@ function zoomToBookmark(){
     var project = getProjectByName(_projects,_aoi.name);
     printQuestion(project.question, project.options)
     hexlevel = project.hexlevel;
-    var firstHexagon = getRandomHexagon(geom, hexlevel);
+    var hexagonCode = getRandomHexagonCode(geom, hexlevel);
     var polygon = L.geoJson(geom, {fill: false});
-    map.fitBounds(polygon.getBounds());
     polygon.addTo(map);
-    drawHexagon(map, firstHexagon);
+    var hexagon = getHexagon(map, hexagonCode);
+    map.addLayer(hexagon);
+    map.fitBounds(hexagon.getBounds());
     refreshScenes();
 }
 

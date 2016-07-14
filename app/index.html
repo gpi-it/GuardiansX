@@ -44,7 +44,7 @@
         <div id="topbarcontent">
             <img id="gg" src="images/gg.png"></img>
             
-            Project: <select id="selectBookmark" onchange="zoomToBookmark()">
+            Project: <select id="selectBookmark" onchange="startProject()">
             </select>
 
             Period: <select id="selectPeriodImages" onchange="selectPeriodImages()">
@@ -118,7 +118,7 @@
             getProjects(function (projects) {
                 _projects=projects.projects;
                 fillAois(aois);
-                zoomToBookmark();
+                startProject();
             });
         });
         

@@ -3,7 +3,7 @@ function random(low, high) {
     return Math.random() * (high - low) + low;
 }
 
-function getRandomHexagon(project, geohexlevel) {
+function getRandomHexagonCode(project, geohexlevel) {
     var poly1 = {"type": "Feature","geometry": project};
     var isInside = false;
     var env = turf.envelope(project);
@@ -19,7 +19,7 @@ function getRandomHexagon(project, geohexlevel) {
     return GEOHEX.getZoneByLocation(lat_rnd, lon_rnd, geohexlevel).code;
 }
 
-function drawHexagon(map, geohex) {
+function getHexagon(map, geohex) {
     var polygonName = "hexagon" + geohex;
     var style = {
         color: "#FF0000",
@@ -32,7 +32,6 @@ function drawHexagon(map, geohex) {
     var polygon = getGeohexPolygon(geohex, style);
     polygon.name = polygonName;
     polygon.id= "hexagon";
-    map.addLayer(polygon);
     return polygon;
 }
 
