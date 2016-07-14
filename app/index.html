@@ -65,7 +65,7 @@
 
             Scenes: <span id="numberOfScenes"></span>
             &nbsp;&nbsp;&nbsp;
-            Score: <span id="score">3</span>
+            Score: <span id="score">0</span>
             &nbsp;&nbsp;&nbsp;
             <select id="login" onchange="">
                 <option value selected>-- login -- </option>
@@ -95,6 +95,7 @@
         var hexlevel=4;
         var acquired_gte;
         var acquired_lte;
+        var _score = 0;
 
         $(document).ready(function() {
             setTimeout(function() {
@@ -122,6 +123,7 @@
                 startProject();
             });
         });
+        L.control.scale({position: 'verticalcenterright'}).addTo(map);
         
     </script>
 </body>

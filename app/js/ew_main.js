@@ -37,9 +37,15 @@ function removeHexagons(){
     });  
 }
 
+function addPointToScore(){
+    _score++;
+    document.getElementById('score').innerHTML = _score;
+}
+
 function clickOption(option){
     // todo 1: post observation to server
     // todo 2: update score
+    addPointToScore();
     // todo 3: go to next hexagon
 }
 
