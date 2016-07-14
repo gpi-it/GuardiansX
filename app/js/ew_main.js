@@ -37,6 +37,12 @@ function removeHexagons(){
     });  
 }
 
+function clickOption(option){
+    // todo 1: post observation to server
+    // todo 2: update score
+    // todo 3: go to next hexagon
+}
+
 function printQuestion(question, options){
     document.getElementById('divQuestion').innerHTML = question;
     var divOptions = document.getElementById('divOptions');
@@ -45,6 +51,9 @@ function printQuestion(question, options){
         var option=options[i];
         var div = document.createElement('span');
         div.innerHTML=option;
+        div.addEventListener('click', function (event) {
+            clickOption(event.currentTarget.innerHTML);
+         });
         div.setAttribute('id', 'spanOption');
         divOptions.appendChild(div);
     }
