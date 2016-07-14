@@ -40,6 +40,7 @@ function removeHexagons(){
 function printQuestion(question, options){
     document.getElementById('divQuestion').innerHTML = question;
     var divOptions = document.getElementById('divOptions');
+    while ( divOptions.firstChild ) divOptions.removeChild( divOptions.firstChild );
     for(i=0;i<options.length;i++){
         var option=options[i];
         var div = document.createElement('span');

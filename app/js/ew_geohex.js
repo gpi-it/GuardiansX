@@ -21,6 +21,7 @@ function getRandomHexagonCode(project, geohexlevel) {
 
 function getHexagon(map, geohex) {
     var polygonName = "hexagon" + geohex;
+    
     var style = {
         color: "#FF0000",
         weight: 2,
