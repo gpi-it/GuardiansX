@@ -3,34 +3,46 @@ function getSelectedProject(){
     _aoi = _aois.payload[s.selectedIndex];
 }
 
-function createHexagon(projectGeometry, hexlevel){
-    var hexagonCode = getRandomHexagonCode(projectGeometry, hexlevel);
+function addProjectGeometryToMap(projectGeometry){
     var polygon = L.geoJson(projectGeometry, {fill: false});
     polygon.addTo(map);
+}
+
+function createHexagon(projectGeometry, hexlevel){
+    var hexagonCode = getRandomHexagonCode(projectGeometry, hexlevel);
     var hexagon = getHexagon(map, hexagonCode);
     return hexagon;
 }
 
 function startNewHexagon(){
     removeHexagons();
-    var hexagon = createHexagon(_aoi.geometry, _project.hexlevel);
-    map.addLayer(hexagon);
-    var bounds=hexagon.getBounds();
+    _hexagon = createHexagon(_aoi.geometry, _project.hexlevel);
+    map.addLayer(_hexagon);
+    var bounds=_hexagon.getBounds();
     map.fitBounds(bounds.pad(-2));
-    refreshScenes();
+    refreshScenes(toWKT(_hexagon));
 }
 
 function startProject(){
     getSelectedProject();
     _project = getProjectByName(_projects,_aoi.name);
+    addProjectGeometryToMap(_aoi.geometry);
     printQuestion(_project.question, _project.options);
     startNewHexagon();
 }
 
-function refreshScenes(){
-    var aoid = _aoi.id;
-    getScenes(aoid,function(scenes){
-        document.getElementById('numberOfScenes').innerHTML = scenes.payload.length;
+function refreshScenes(hexagonWkt){
+    getScenes(hexagonWkt,function(scenes){
+        console.log("get scenes"+ scenes.payload.length);
+        if(scenes.payload.length>0){
+            var isodate = scenes.payload[0].acquired;
+            var day = moment(isodate);
+            var res = day.format('YYYY-MM-DD HH:MM');
+            document.getElementById('dateOfScene').innerHTML = res;
+        }
+        else{
+            document.getElementById('dateOfScene').innerHTML = "-no images-";
+        }
     });
 }
 
@@ -79,9 +91,9 @@ function selectPeriodImages(){
         if(layer.id=="urthecast"){
             map.removeLayer(layer);
             addUrthecastLayer(days);
-            refreshScenes();
         }
     });
+    refreshScenes(toWKT(_hexagon));
 }
 
 function selectClouds(){
@@ -92,8 +104,8 @@ function selectClouds(){
         if(layer.id=="urthecast"){
             map.removeLayer(layer);
             addUrthecastLayer(days);
-            refreshScenes();
         }
     });
+    refreshScenes(toWKT(_hexagon));
 }
 
