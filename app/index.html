@@ -96,6 +96,7 @@
         var acquired_gte;
         var acquired_lte;
         var _score = 0;
+        var _project;
 
         $(document).ready(function() {
             setTimeout(function() {
@@ -108,6 +109,7 @@
         });
 
         var map = L.map('mapid', {zoomControl: false}).setView([0, 0], 3);
+        L.control.scale({metric: true,imperial: false}).addTo(map);
         var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
         var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
         var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
@@ -123,7 +125,6 @@
                 startProject();
             });
         });
-        L.control.scale({position: 'verticalcenterright'}).addTo(map);
         
     </script>
 </body>

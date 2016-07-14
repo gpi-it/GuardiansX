@@ -11,15 +11,20 @@ function createHexagon(projectGeometry, hexlevel){
     return hexagon;
 }
 
-function startProject(){
+function startNewHexagon(){
     removeHexagons();
-    getSelectedProject();
-    var project = getProjectByName(_projects,_aoi.name);
-    printQuestion(project.question, project.options);
-    var hexagon = createHexagon(_aoi.geometry, project.hexlevel);
+    var hexagon = createHexagon(_aoi.geometry, _project.hexlevel);
     map.addLayer(hexagon);
-    map.fitBounds(hexagon.getBounds());
+    var bounds=hexagon.getBounds();
+    map.fitBounds(bounds.pad(-2));
     refreshScenes();
+}
+
+function startProject(){
+    getSelectedProject();
+    _project = getProjectByName(_projects,_aoi.name);
+    printQuestion(_project.question, _project.options);
+    startNewHexagon();
 }
 
 function refreshScenes(){
@@ -47,6 +52,7 @@ function clickOption(option){
     // todo 2: update score
     addPointToScore();
     // todo 3: go to next hexagon
+    startNewHexagon();
 }
 
 function printQuestion(question, options){
