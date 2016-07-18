@@ -1,6 +1,6 @@
 # GuardiansX
 
-# Installation
+## Installation
 
 git clone https://github.com/gpi-it/GuardiansX.git
 
@@ -17,5 +17,5 @@ browser: open http://localhost:3000
 
 
 
-Current Interface Concepts
+##Current Interface Concepts
 <img src='https://github.com/gpi-it/GuardiansX/blob/master/interface/guardianWIP.png?raw=true'></img>
