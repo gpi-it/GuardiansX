@@ -1,7 +1,8 @@
 {
     "projects": 
     [
-      {"name": "Chaco", "hexlevel":4, "question":"Is there deforestation in this area?", "options":["Yes", "No", "Maybe", "Don't know"]},
+      {"name": "Roumanian Virgin Forests", "hexlevel":4, "question":"Is there deforestation in this area?", "options":["Yes", "No", "Maybe", "Don't know"]},
+      {"name": "Chaco", "hexlevel":13, "question":"Is there deforestation in this area?", "options":["Yes", "No", "Maybe", "Don't know"]},
       {"name": "Veladero", "hexlevel":6,"question": "Do you observe mining activities in this area?", "options":["Yes", "No", "Maybe", "Don't know"]},
       {"name": "ITCI", "hexlevel":4, "question":"Is there road construction in this area?", "options":["100%", "50%", "0%"]}
     ]

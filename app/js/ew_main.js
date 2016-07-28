@@ -27,7 +27,9 @@ function startProject(){
     getSelectedProject();
     _project = getProjectByName(_projects,_aoi.name);
     addProjectGeometryToMap(_aoi.geometry);
-    printQuestion(_project.question, _project.options);
+    if(_project != null){
+        printQuestion(_project.question, _project.options);
+    }
     startNewHexagon();
 }
 
