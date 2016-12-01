@@ -2,18 +2,34 @@
 
 ## Installation
 
-git clone https://github.com/gpi-it/GuardiansX.git
+```
+$ git clone https://github.com/gpi-it/GuardiansX.git
 
-cd GuardiansX
+$ cd GuardiansX
 
-copy app/js/config-sample.js app/js/config.js
+$ copy app/js/config-sample.js app/js/config.js
 // and insert your UrtheCast api keys in config.js
 
-npm install
+$ npm install
 
-node server.js
+$ node server.js
+```
 
 browser: open http://localhost:3000
+
+## Experimental Docker instance
+
+```
+$ docker run -p 3000:3000 bertt/earthwatchers
+```
+
+Build command:
+
+```
+$ docker build -t bertt/earthwatchers .
+```
+
+Nb: database is not (yet) available in Docker
 
 <br><br>
 
