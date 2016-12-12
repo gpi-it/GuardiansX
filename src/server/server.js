@@ -18,7 +18,7 @@ mongoClient.connect(mongoDbUrl, function(err, db) {
     }
 })
 
-app.use(express.static(path.join(__dirname, 'app')));
+app.use(express.static(path.join(__dirname, '../client')));
 var server = app.listen(port);
 module.exports = server;
 console.log('Earthwatchers server started on port ' + port);
