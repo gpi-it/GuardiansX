@@ -1,7 +1,6 @@
 var express = require('express');
 var path = require('path');
 var mongodb = require('mongodb'); 
-var tunnel = require('tunnel-ssh');
 
 var app = express();
 var port = process.env.PORT || 3000;
