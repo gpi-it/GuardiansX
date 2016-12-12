@@ -1,16 +1,15 @@
 # GuardiansX
 
-## Installation
+## Installation on local dev machine
 
 ```
 $ git clone https://github.com/gpi-it/GuardiansX.git
 
 $ cd GuardiansX
 
-$ copy app/js/config-sample.js app/js/config.js
-// and insert your UrtheCast api keys in config.js
-
 $ npm install
+
+$ docker run -d -p 27017:27017 -p 28017:28017 -e MONGODB_PASS="admin" tutum/mongodb
 
 $ node server.js
 ```
