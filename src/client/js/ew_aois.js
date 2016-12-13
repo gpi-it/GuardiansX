@@ -23,6 +23,7 @@ function fillAois(aois){
         s.add(option);                    
     }
 
-    // now select the first option, map zooms in to this project
-    s.selectedIndex=0;
+    // now select the second option (Veladero), map zooms in to this project
+    // first project (Roumanian) is too complex too handle for now...
+    s.selectedIndex=1;
 }

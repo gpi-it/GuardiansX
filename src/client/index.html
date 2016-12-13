@@ -88,12 +88,12 @@
 
         $(document).ready(function() {
             setTimeout(function() {
-                $("#welcome").fadeIn(3000, function() {
-                    $("#welcome").fadeOut(1000, function() {
-                        $("#blankscreen").fadeOut(500);
+                $("#welcome").fadeIn(30, function() {
+                    $("#welcome").fadeOut(10, function() {
+                        $("#blankscreen").fadeOut(5);
                     });
                 })
-            }, 2);
+            }, 0);
         });
 
         var map = L.map('mapid', {zoomControl: false}).setView([0, 0], 3);
