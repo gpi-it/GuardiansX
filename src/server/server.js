@@ -5,7 +5,7 @@ var mongodb = require('mongodb');
 var app = express();
 var port = process.env.PORT || 3000;
 
-var mongoDbUrl = 'mongodb://admin:admin@127.0.0.1:27017/admin';
+var mongoDbUrl = 'mongodb://mongo:27017';
 var mongoClient = mongodb.MongoClient;
 mongoClient.connect(mongoDbUrl, function(err, db) {
     if(err){
