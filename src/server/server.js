@@ -1,11 +1,16 @@
 var express = require('express');
 var path = require('path');
 var mongodb = require('mongodb'); 
+var fs = require('fs');
 
 var app = express();
 var port = process.env.PORT || 3000;
 
-var mongoDbUrl = 'mongodb://mongo:27017';
+var expressLogFile = fs.createWriteStream(__dirname + '/express.log', {
+    flags: 'a'
+});
+
+var mongoDbUrl = 'mongodb://localhost:27017';
 var mongoClient = mongodb.MongoClient;
 mongoClient.connect(mongoDbUrl, function(err, db) {
     if(err){
@@ -18,6 +23,16 @@ mongoClient.connect(mongoDbUrl, function(err, db) {
     }
 })
 
+var router = express.Router();
+
+// get root document
+router.get('/', function (req, res) {
+    res.json({
+        message: 'Earthwatchers serverside'
+    });
+});
+
+app.use('/api', router);
 app.use(express.static(path.join(__dirname, '../client')));
 var server = app.listen(port);
 module.exports = server;
