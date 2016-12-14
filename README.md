@@ -33,4 +33,4 @@ Nb: database is not (yet) available in Docker
 <br><br>
 
 ##Interface Concepts
-<img src='https://github.com/gpi-it/GuardiansX/blob/master/interface/guardianWIP.png?raw=true'></img>
+<img src='https://github.com/gpi-it/GuardiansX/blob/master/docs/interface/guardianWIP.png?raw=true'></img>
