@@ -1,3 +1,79 @@
+function startProject(){
+    getSelectedProject();
+    _project = getProjectByName(_projects,_aoi.name);
+
+    var projectGeometry = addProjectGeometryToMap(_aoi.geometry);
+    zoomToProject(projectGeometry);
+    var zones= getProjectZones(projectGeometry,_project.hexlevel);
+    var style = {
+        color: "#000000",
+        weight: 4,
+        opacity: 0.65,
+        fillOpacity: 0
+    };
+
+    drawZones(map, zones,style);
+
+    if(_project != null){
+        printQuestion(_project.question, _project.options);
+    }
+}
+
+function drawZones(map, zones,style){
+    for (var i = 0; i < zones.length ; i++) {
+        var zone= zones[i];
+        drawZone(map, zone,style);
+    }
+}
+
+function drawZone(map, zone, style){
+    var poly = L.polygon(zone.getHexCoords(), style);
+    poly.id="zone";
+    poly.name="test";
+    poly.addTo(map);
+}
+
+function zoomToProject(projectGeometry){
+    var projectBounds = projectGeometry.getBounds(); 
+    map.fitBounds(projectBounds.pad(-1));
+}
+
+function haszone(zones, code) {
+    for (var i = 0; i < zones.length; i++) {
+        if (zones[i].code === code) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function getProjectZones(projectGeometry,hexlevel){
+    var projectBounds = projectGeometry.getBounds(); 
+    var xmin = projectBounds.getWest();
+    var xmax = projectBounds.getEast();
+    var ymin = projectBounds.getSouth();
+    var ymax = projectBounds.getNorth();
+
+    var zonell = GEOHEX.getZoneByLocation(ymin,xmin,_project.hexlevel);
+    var poly = L.polygon(zonell.getHexCoords(), null);
+    var bounds = poly.getBounds();
+    var zonewidth = bounds.getEast()- bounds.getWest();
+    var zoneheight = bounds.getNorth()- bounds.getSouth();
+    // 
+    zonewidth = zonewidth/2;
+
+    var zones = [];
+    for (var x = xmin; x < xmax; x+=zonewidth) {
+        for (var y = ymin; y < ymax; y+=zoneheight) {
+            var zone = GEOHEX.getZoneByLocation(y,x,_project.hexlevel);
+            if(!haszone(zones,zone.code)){
+                zones.push(zone);
+            }
+        }
+    }
+    return zones;
+}
+
 function getSelectedProject(){
     var s=document.getElementById('selectBookmark');
     _aoi = _aois.payload[s.selectedIndex];
@@ -6,31 +82,7 @@ function getSelectedProject(){
 function addProjectGeometryToMap(projectGeometry){
     var polygon = L.geoJson(projectGeometry, {fill: false});
     polygon.addTo(map);
-}
-
-function createHexagon(projectGeometry, hexlevel){
-    var hexagonCode = getRandomHexagonCode(projectGeometry, hexlevel);
-    var hexagon = getHexagon(map, hexagonCode);
-    return hexagon;
-}
-
-function startNewHexagon(){
-    removeHexagons();
-    _hexagon = createHexagon(_aoi.geometry, _project.hexlevel);
-    map.addLayer(_hexagon);
-    var bounds=_hexagon.getBounds();
-    map.fitBounds(bounds.pad(-2));
-    refreshScenes(toWKT(_hexagon));
-}
-
-function startProject(){
-    getSelectedProject();
-    _project = getProjectByName(_projects,_aoi.name);
-    addProjectGeometryToMap(_aoi.geometry);
-    if(_project != null){
-        printQuestion(_project.question, _project.options);
-    }
-    startNewHexagon();
+    return polygon;
 }
 
 function refreshScenes(hexagonWkt){
