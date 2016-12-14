@@ -16,3 +16,46 @@ function getProjects(callback){
     };
     request.send();
 }
+
+function zoomToProject(map, projectGeometry){
+    var projectBounds = projectGeometry.getBounds(); 
+    map.fitBounds(projectBounds.pad(-1));
+}
+
+function getProjectZones(projectGeometry,hexlevel){
+    var projectBounds = projectGeometry.getBounds(); 
+    var xmin = projectBounds.getWest();
+    var xmax = projectBounds.getEast();
+    var ymin = projectBounds.getSouth();
+    var ymax = projectBounds.getNorth();
+
+    var zonell = GEOHEX.getZoneByLocation(ymin,xmin,_project.hexlevel);
+    var poly = L.polygon(zonell.getHexCoords(), null);
+    var bounds = poly.getBounds();
+    var zonewidth = bounds.getEast()- bounds.getWest();
+    var zoneheight = bounds.getNorth()- bounds.getSouth();
+    // 
+    zonewidth = zonewidth/2;
+
+    var zones = [];
+    for (var x = xmin; x < xmax; x+=zonewidth) {
+        for (var y = ymin; y < ymax; y+=zoneheight) {
+            var zone = GEOHEX.getZoneByLocation(y,x,_project.hexlevel);
+            if(!haszone(zones,zone.code)){
+                zones.push(zone);
+            }
+        }
+    }
+    return zones;
+}
+
+function getSelectedProject(){
+    var s=document.getElementById('selectBookmark');
+    _aoi = _aois.payload[s.selectedIndex];
+}
+
+function addProjectGeometryToMap(map, projectGeometry){
+    var polygon = L.geoJson(projectGeometry, {fill: false});
+    polygon.addTo(map);
+    return polygon;
+}
