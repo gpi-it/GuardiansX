@@ -22,6 +22,13 @@ function zoomToProject(map, projectGeometry){
     map.fitBounds(projectBounds.pad(-1));
 }
 
+function isZoneWithinProject(projectGeometry, zone){
+    var poly1 = projectGeometry.toGeoJSON().features[0].geometry;
+    var poly2 = L.polygon(zone.getHexCoords(), null).toGeoJSON().geometry;
+    var res= turf.intersect(poly1, poly2);
+    return res!==undefined;
+}
+
 function getProjectZones(projectGeometry,hexlevel){
     var projectBounds = projectGeometry.getBounds(); 
     var xmin = projectBounds.getWest();
@@ -42,7 +49,10 @@ function getProjectZones(projectGeometry,hexlevel){
         for (var y = ymin; y < ymax; y+=zoneheight) {
             var zone = GEOHEX.getZoneByLocation(y,x,_project.hexlevel);
             if(!haszone(zones,zone.code)){
-                zones.push(zone);
+                var isWithin = isZoneWithinProject(projectGeometry,zone);
+                if(isWithin){
+                    zones.push(zone);
+                }
             }
         }
     }
