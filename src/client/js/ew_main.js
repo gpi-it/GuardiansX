@@ -7,6 +7,8 @@ function startProject(){
     getSelectedProject();
     _project = getProjectByName(_projects,_aoi.name);
     cloud_coverage = _project.max_clouds;
+    acquired_lte = _project.image_acquired_lte;
+    acquired_gte = _project.image_acquired_gte;
 
     var projectGeometry = addProjectGeometryToMap(map, _aoi.geometry);
     zoomToProject(map,projectGeometry);
