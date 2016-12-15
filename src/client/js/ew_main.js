@@ -9,6 +9,7 @@ function startProject(){
     cloud_coverage = _project.max_clouds;
     acquired_lte = _project.image_acquired_lte;
     acquired_gte = _project.image_acquired_gte;
+    document.getElementById('dateOfScene').innerHTML = acquired_gte + " - " + acquired_lte;
 
     var projectGeometry = addProjectGeometryToMap(map, _aoi.geometry);
     zoomToProject(map,projectGeometry);
@@ -24,23 +25,8 @@ function startProject(){
     addUrthecastLayer(days);
 
     if(_project != null){
-        printQuestion(_project.question, _project.options);
+        document.getElementById('divQuestion').innerHTML = question;
     }
-}
-
-function refreshScenes(hexagonWkt){
-    getScenes(hexagonWkt,function(scenes){
-        console.log("get scenes"+ scenes.payload.length);
-        if(scenes.payload.length>0){
-            var isodate = scenes.payload[0].acquired;
-            var day = moment(isodate);
-            var res = day.format('YYYY-MM-DD HH:MM');
-            document.getElementById('dateOfScene').innerHTML = res;
-        }
-        else{
-            document.getElementById('dateOfScene').innerHTML = "-no images-";
-        }
-    });
 }
 
 function removeLayers(id){
@@ -49,33 +35,4 @@ function removeLayers(id){
             map.removeLayer(layer);
         }
     });  
-}
-
-function addPointToScore(){
-    _score++;
-    document.getElementById('score').innerHTML = _score;
-}
-
-function clickOption(option){
-    // todo 1: post observation to server
-    // todo 2: update score
-    addPointToScore();
-    // todo 3: go to next hexagon
-    startNewHexagon();
-}
-
-function printQuestion(question, options){
-    document.getElementById('divQuestion').innerHTML = question;
-    var divOptions = document.getElementById('divOptions');
-    while ( divOptions.firstChild ) divOptions.removeChild( divOptions.firstChild );
-    for(i=0;i<options.length;i++){
-        var option=options[i];
-        var div = document.createElement('span');
-        div.innerHTML=option;
-        div.addEventListener('click', function (event) {
-            clickOption(event.currentTarget.innerHTML);
-         });
-        div.setAttribute('id', 'spanOption');
-        divOptions.appendChild(div);
-    }
 }

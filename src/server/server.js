@@ -10,6 +10,9 @@ var expressLogFile = fs.createWriteStream(__dirname + '/express.log', {
     flags: 'a'
 });
 
+
+/**
+ * todo: add database stuff
 var mongoDbUrl = 'mongodb://localhost:27017';
 var mongoClient = mongodb.MongoClient;
 mongoClient.connect(mongoDbUrl, function(err, db) {
@@ -22,6 +25,7 @@ mongoClient.connect(mongoDbUrl, function(err, db) {
         dbObservations = db.collection('projects');
     }
 })
+*/
 
 var router = express.Router();
 
