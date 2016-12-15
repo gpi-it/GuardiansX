@@ -1,6 +1,3 @@
-
-
-
 function drawZones(map, zones,style){
     for (var i = 0; i < zones.length ; i++) {
         var zone= zones[i];
@@ -10,8 +7,7 @@ function drawZones(map, zones,style){
 
 function drawZone(map, zone, style){
     var poly = L.polygon(zone.getHexCoords(), style);
-    poly.id="zone";
-    poly.name="test";
+    poly.id="hexagon";
     poly.addTo(map);
 }
 

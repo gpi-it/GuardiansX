@@ -1,6 +1,12 @@
 function startProject(){
+    // todo clean things up...
+    removeLayers("hexagon");
+    removeLayers("urthecast");
+    removeLayers("project");
+    
     getSelectedProject();
     _project = getProjectByName(_projects,_aoi.name);
+    cloud_coverage = _project.max_clouds;
 
     var projectGeometry = addProjectGeometryToMap(map, _aoi.geometry);
     zoomToProject(map,projectGeometry);
@@ -13,13 +19,12 @@ function startProject(){
     };
 
     drawZones(map, zones,style);
+    addUrthecastLayer(days);
 
     if(_project != null){
         printQuestion(_project.question, _project.options);
     }
 }
-
-
 
 function refreshScenes(hexagonWkt){
     getScenes(hexagonWkt,function(scenes){
@@ -36,9 +41,9 @@ function refreshScenes(hexagonWkt){
     });
 }
 
-function removeHexagons(){
+function removeLayers(id){
     map.eachLayer(function (layer) {
-        if(layer.id=="hexagon"){
+        if(layer.id==id){
             map.removeLayer(layer);
         }
     });  
@@ -72,30 +77,3 @@ function printQuestion(question, options){
         divOptions.appendChild(div);
     }
 }
-
-function selectPeriodImages(){
-    var periodSelect=document.getElementById('selectPeriodImages');
-    days = periodSelect.options[periodSelect.selectedIndex].value;
-
-    map.eachLayer(function (layer) {
-        if(layer.id=="urthecast"){
-            map.removeLayer(layer);
-            addUrthecastLayer(days);
-        }
-    });
-    refreshScenes(toWKT(_hexagon));
-}
-
-function selectClouds(){
-    var cloudSelect=document.getElementById('selectClouds');
-    cloud_coverage = cloudSelect.options[cloudSelect.selectedIndex].value;
-
-    map.eachLayer(function (layer) {
-        if(layer.id=="urthecast"){
-            map.removeLayer(layer);
-            addUrthecastLayer(days);
-        }
-    });
-    refreshScenes(toWKT(_hexagon));
-}
-

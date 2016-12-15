@@ -49,15 +49,6 @@
             
             Project: <select id="selectBookmark" onchange="startProject()">
             </select>
-
- -            Max Clouds: <select id="selectClouds" onchange="selectClouds()">
- -                <option value="0">0%</option>
- -                <option value="20" selected>20%</option>
- -                <option value="40">40%</option>
- -                <option value="60">60%</option>
- -                <option value="80">80%</option>
- -            </select>
-
             Scene date: <span id="dateOfScene"></span>
             &nbsp;&nbsp;&nbsp;
             Score: <span id="score">0</span>
@@ -103,7 +94,6 @@
         var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
         osm.addTo(map);
         new L.Control.Zoom({ position: 'topright' }).addTo(map);
-        addUrthecastLayer(days);
 
         getAois(function (aois) {
             _aois=aois;

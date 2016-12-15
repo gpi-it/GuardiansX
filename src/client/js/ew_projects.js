@@ -66,6 +66,7 @@ function getSelectedProject(){
 
 function addProjectGeometryToMap(map, projectGeometry){
     var polygon = L.geoJson(projectGeometry, {fill: false});
+    polygon.id="project";
     polygon.addTo(map);
     return polygon;
 }
