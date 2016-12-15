@@ -10,7 +10,7 @@ function getLayerUrl(){
     return layerurl;
 }
 
-function addUrthecastLayer(days){
+function addUrthecastLayer(){
     var url= getLayerUrl();
     urthecastlayer = new L.TileLayer(url, {minZoom: minZoom});
     urthecastlayer.id="urthecast";

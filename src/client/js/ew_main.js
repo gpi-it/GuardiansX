@@ -22,10 +22,9 @@ function startProject(){
     };
 
     drawZones(map, zones,style);
-    addUrthecastLayer(days);
+    addUrthecastLayer();
 
     if(_project != null){
-        // alert("hallo");
         var el = document.getElementById('divQuestion'); 
         el.innerHTML = _project.question;
     }

@@ -1,9 +1,9 @@
 {
     "projects": 
     [
-      {"name": "Veladero", "hexlevel":6,"max_clouds":19, "image_acquired_gte": "2016-09-01", "image_acquired_lte": "2016-10-01", "question": "Do you observe mining activities in this area?", "options":["Yes", "No", "Maybe", "Don't know"]},
-      {"name": "Chaco", "hexlevel":13, "max_clouds":30, "image_acquired_gte": "2016-09-01", "image_acquired_lte": "2016-10-01", "question":"Is there deforestation in this area?", "options":["Yes", "No", "Maybe", "Don't know"]},
-      {"name": "Romanian Primary Forest", "hexlevel":4, "max_clouds":25, "image_acquired_gte": "2016-09-01", "image_acquired_lte": "2016-10-01", "question":"Is there deforestation in this area?", "options":["Yes", "No", "Maybe", "Don't know"]},
-      {"name": "ITCI", "hexlevel":4, "max_clouds":50, "image_acquired_gte": "2016-08-01", "image_acquired_lte": "2016-11-01", "question":"Is there road construction in this area?", "options":["100%", "50%", "0%"]}
+      {"name": "Veladero", "hexlevel":6,"max_clouds":19, "image_acquired_gte": "2016-09-01", "image_acquired_lte": "2016-10-01", "question": "Do you observe mining activities in this area?"},
+      {"name": "Chaco", "hexlevel":13, "max_clouds":30, "image_acquired_gte": "2016-09-01", "image_acquired_lte": "2016-10-01", "question":"Is there deforestation in this area?"},
+      {"name": "Romanian Primary Forest", "hexlevel":4, "max_clouds":25, "image_acquired_gte": "2016-09-01", "image_acquired_lte": "2016-10-01", "question":"Is there deforestation in this area?"},
+      {"name": "ITCI", "hexlevel":4, "max_clouds":50, "image_acquired_gte": "2016-08-01", "image_acquired_lte": "2016-11-01", "question":"Is there road construction in this area?"}
     ]
 }
