@@ -41,7 +41,7 @@ function getProjectZones(projectGeometry,hexlevel){
     var bounds = poly.getBounds();
     var zonewidth = bounds.getEast()- bounds.getWest();
     var zoneheight = bounds.getNorth()- bounds.getSouth();
-    // 
+    // to be sure to get all the zones, dived by two
     zonewidth = zonewidth/2;
 
     var zones = [];

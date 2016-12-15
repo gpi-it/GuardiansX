@@ -25,7 +25,9 @@ function startProject(){
     addUrthecastLayer(days);
 
     if(_project != null){
-        document.getElementById('divQuestion').innerHTML = question;
+        // alert("hallo");
+        var el = document.getElementById('divQuestion'); 
+        el.innerHTML = _project.question;
     }
 }
 

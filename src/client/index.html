@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="styles/skeleton.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
@@ -13,7 +13,6 @@
     <script src="js/leafletwkt.js"></script>
     <script src="js/config.js"></script>
     <script src="js/hex_v3.2_core.js"></script>
-    <script src="js/ew_scenes.js"></script>
     <script src="js/ew_projects.js"></script>
     <script src="js/ew_aois.js"></script>
     <script src="js/ew_geohex.js"></script>
@@ -48,15 +47,13 @@
             <img id="gg" src="images/gg.png"></img>
             Project: <select id="selectBookmark" onchange="startProject()">
             </select>
-            Scene date: <span id="dateOfScene"></span>
+            Scene date: <span id="dateOfScene"></span><br/>
+            <span id="divQuestion"></span>
             <br/>
-            
         </div>
     </div>
     <div id="topdivider"></div>
     <div id="mapid"></div>
-    <div id="divQuestion"></div>
-    <div id="divOptions"></div>
     
     <script>
         // global vars
